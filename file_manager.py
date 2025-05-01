@@ -19,3 +19,14 @@ def write(filename: str, data: list[dict]) -> None:
         writer = csv.DictWriter(file, fieldnames=data[0].keys())
         writer.writeheader()
         writer.writerows(data)
+
+
+def append(filename: str, data: dict) -> None:
+    path = f"data/{filename}"
+    file_exists = os.path.exists(path)
+
+    with open(file=path, mode="a", encoding="UTF-8", newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=data.keys())
+        if not file_exists or os.path.getsize(path) == 0:
+            writer.writeheader()
+        writer.writerow(data)
